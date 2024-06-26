@@ -1,0 +1,12 @@
+## Commands
+This section lists command(s) run by cuplr workflow
+
+* Running cuplr
+
+### Run cuplr
+
+```
+    set -euo pipefail
+    Rscript ~{cuplrScript} -s ~{sampleName}
+
+```

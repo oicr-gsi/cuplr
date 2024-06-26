@@ -25,14 +25,14 @@ workflow cuplr {
 
   call runCuplr {
     input: 
-      inputSampleName = sampleName
-      inputPurpleSomaticVcf = purpleSomaticVcf
-      inputPurpleCnvSomaticTsv = purpleCnvSomaticTsv
-      inputPurplePurityTsv = purplePurityTsv
-      inputLinxDriverCatalogTsv = linxDriverCatalogTsv
-      inputLinxFusionTsv = linxFusionTsv
-      inputLinxVisSvDataTsv = linxVisSvDataTsv
-      inputLinxViralInsertsTsv = linxViralInsertsTsv
+      sampleName = inputSampleName,
+      purpleSomaticVcf = inputPurpleSomaticVcf,
+      purpleCnvSomaticTsv = inputPurpleCnvSomaticTsv,
+      purplePurityTsv = inputPurplePurityTsv,
+      linxDriverCatalogTsv = inputLinxDriverCatalogTsv,
+      linxFusionTsv = inputLinxFusionTsv,
+      linxVisSvDataTsv = inputLinxVisSvDataTsv,
+      linxViralInsertsTsv = inputLinxViralInsertsTsv
   }
   
   meta {
@@ -108,48 +108,90 @@ workflow cuplr {
       {
         name: "GenomeInfoDb/1.36.1",
         url: "https://bioconductor.org/packages/release/bioc/html/GenomeInfoDb.html"
-      },
+      }
     ]
     output_meta: {
-      chromArm: "Chromosome arm gains/losses compared to the overall genome ploidy (source: PURPLE)",
-      fusion: "Presence of gene fusions (source: LINX)",
-      gene: "Deep deletions, amplifications, biallelic losses and mutations of cancer associated genes (source: LINX)",
-      mutLoad: "Total number of SBSs, DBSs and indels (source: VCF)",
-      purple: "Genome properties, including overall ploidy, diploid proportion, gender as derived from copy number data, and presence of whole genome duplication (source: PURPLE)",
-      rmd: "Regional mutational density (RMD) profiles as extracted by NMF (source: VCF)",
-      sigs: "Relative contribution of SBS, DBS and indel mutational signatures (source: VCF)",
-      sv: "Simple and complex structural variants (source: LINX)",
-      viralIns: "Presence of viral sequence insertions (source: LINX)",
-      armPloidy: "Raw output file",
-      rmdBinCounts: "Raw output file",
-      smnvContexts: "Raw output file",
-      allFeatures: "Summary of all features extracted from LINX and PURPLE to be used to make predictions",
-      patientReport:  "Final .png output detailing prediction of cancer of unknown location"
+    chromArm: {
+        description: "Chromosome arm gains/losses compared to the overall genome ploidy (source:PURPLE)",
+        vidarr_label: "chromArm"
+    },
+    fusion: {
+        description: "Presence of gene fusions (source:LINX)",
+        vidarr_label: "fusion"
+    },
+    gene: {
+        description: "Deep deletions, amplifications, biallelic losses and mutations of cancer associated genes (source:LINX)",
+        vidarr_label: "gene"
+    },
+    mutLoad: {
+        description: "Total number of SBSs, DBSs and indels (source:VCF)",
+        vidarr_label: "mutLoad"
+    },
+    purple: {
+        description: "Genome properties, including overall ploidy, diploid proportion, gender as derived from copy number data, and presence of whole genome duplication (source:PURPLE)",
+        vidarr_label: "purple"
+    },
+    rmd: {
+        description: "Regional mutational density (RMD) profiles as extracted by NMF (source:VCF)",
+        vidarr_label: "rmd"
+    },
+    sigs: {
+        description: "Relative contribution of SBS, DBS and indel mutational signatures (source:VCF)",
+        vidarr_label: "sigs"
+    },
+    sv: {
+        description: "Simple and complex structural variants (source:LINX)",
+        vidarr_label: "sv"
+    },
+    viralIns: {
+        description: "Presence of viral sequence insertions (source:LINX)",
+        vidarr_label: "viralIns"
+    },
+    armPloidy: {
+        description: "Raw output file",
+        vidarr_label: "armPloidy"
+    },
+    rmdBinCounts: {
+        description: "Raw output file",
+        vidarr_label: "rmdBinCounts"
+    },
+    smnvContexts: {
+        description: "Raw output file",
+        vidarr_label: "smnvContexts"
+    },
+    allFeatures: {
+        description: "Summary of all features extracted from LINX and PURPLE to be used to make predictions",
+        vidarr_label: "allFeatures"
+    },
+    patientReport: {
+        description: "Final .png output detailing prediction of cancer of unknown location",
+        vidarr_label: "patientReport"
     }
+}
   }
   
   output {
 
-    File chromArm = "~{sampleName}.chrom_arm.txt"
-    File fusion = "~{sampleName}.fusion.txt"
-    File gene = "~{sampleName}.gene.txt"
-    File mutLoad = "~{sampleName}.mut_load.txt"
-    File purple = "~{sampleName}.purple.txt"
-    File rmd = "~{sampleName}.rmd.txt"
-    File sigs = "~{sampleName}.sigs.txt"
-    File sv = "~{sampleName}.sv.txt"
-    File viralIns = "~{sampleName}.viral_ins.txt"
-    File armPloidy = "~{sampleName}.arm_ploidy.txt"
-    File rmdBinCounts = "~{sampleName}.rmd_bin_counts.txt"
-    File smnvContexts = "~{sampleName}.smnv_contexts.txt"
-    File allFeatures = "~{sampleName}.all_features.txt"
-    File patientReport = "~{sampleName}.report.png"
+    File chromArm = "~{inputSampleName}.chrom_arm.txt"
+    File fusion = "~{inputSampleName}.fusion.txt"
+    File gene = "~{inputSampleName}.gene.txt"
+    File mutLoad = "~{inputSampleName}.mut_load.txt"
+    File purple = "~{inputSampleName}.purple.txt"
+    File rmd = "~{inputSampleName}.rmd.txt"
+    File sigs = "~{inputSampleName}.sigs.txt"
+    File sv = "~{inputSampleName}.sv.txt"
+    File viralIns = "~{inputSampleName}.viral_ins.txt"
+    File armPloidy = "~{inputSampleName}.arm_ploidy.txt"
+    File rmdBinCounts = "~{inputSampleName}.rmd_bin_counts.txt"
+    File smnvContexts = "~{inputSampleName}.smnv_contexts.txt"
+    File allFeatures = "~{inputSampleName}.all_features.txt"
+    File patientReport = "~{inputSampleName}.report.png"
   }
 }
   
   
   
-task cuplr {
+task runCuplr {
   input {
     File purpleSomaticVcf
     File purpleCnvSomaticTsv
@@ -158,6 +200,7 @@ task cuplr {
     File linxFusionTsv
     File linxVisSvDataTsv
     File linxViralInsertsTsv
+    String sampleName
     String modules = "cuplr/1.0" 
     String cuplrScript = "~/cuplr.R"
     String genomeVersion = "hg38"
@@ -167,6 +210,7 @@ task cuplr {
   }
   
   parameter_meta {
+    sampleName: "Sample id"
     purpleSomaticVcf: "purple somatic .vcf"
     purpleCnvSomaticTsv: "purple somatic CNV .tsv"
     purplePurityTsv: "purple purity .tsv"
